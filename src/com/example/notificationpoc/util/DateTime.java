@@ -8,15 +8,15 @@ import java.util.Date;
 public class DateTime {
 	public String GetUIDate(Date dateTime) {
 		if (DateTimeBeforeToday(dateTime)) {
-			return new SimpleDateFormat(Constants.UI_DATE_TIME_FORMAT).format(dateTime).toString();
+			return new SimpleDateFormat(Constants.DateFormat.UI_DATE_TIME_FORMAT).format(dateTime).toString();
 		} else {
-			return new SimpleDateFormat(Constants.UI_TIME_ONLY_FORMAT).format(dateTime).toString();
+			return new SimpleDateFormat(Constants.DateFormat.UI_TIME_ONLY_FORMAT).format(dateTime).toString();
 		}
 	}
 	
 	public String GetUIDate(String dateTime) {
 		try {
-			Date rawDate = new SimpleDateFormat(Constants.DB_DATE_TIME_FORMAT).parse(dateTime);
+			Date rawDate = new SimpleDateFormat(Constants.DateFormat.DB_DATE_TIME_FORMAT).parse(dateTime);
 			return GetUIDate(rawDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -26,7 +26,16 @@ public class DateTime {
 	}
 	
 	public String GetDBDate(Date dateTime) {
-		return new SimpleDateFormat(Constants.DB_DATE_TIME_FORMAT).format(dateTime);
+		return new SimpleDateFormat(Constants.DateFormat.DB_DATE_TIME_FORMAT).format(dateTime);
+	}
+	
+	public Date GetDBDate(String dateTime) {
+		try {
+			return new SimpleDateFormat(Constants.DateFormat.DB_DATE_TIME_FORMAT).parse(dateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public Date Now() {

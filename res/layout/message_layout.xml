@@ -26,11 +26,11 @@
 	    android:textSize="12sp" />
 	
 	<ImageView
-	    android:id="@+id/imgRetry"
+	    android:id="@+id/imgWaiting"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginRight="5dp"
-	    android:contentDescription="Retry"
-	    android:src="@drawable/ic_action_example" />
+	    android:contentDescription="Waiting"
+	    android:src="@drawable/ic_waiting" />
 
 </LinearLayout>

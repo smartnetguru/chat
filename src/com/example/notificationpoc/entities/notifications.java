@@ -2,7 +2,6 @@ package com.example.notificationpoc.entities;
 
 public class notifications {
 	public int Id;
-	public String GUID;
 	
 	@com.google.gson.annotations.SerializedName("channel")
 	public String mRegistrationId;

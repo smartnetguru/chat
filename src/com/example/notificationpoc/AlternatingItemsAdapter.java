@@ -2,13 +2,12 @@ package com.example.notificationpoc;
 import java.util.List;
 
 import com.example.notificationpoc.entities.Message;
+import com.example.notificationpoc.util.Constants.MessageSendingState;
+import com.example.notificationpoc.util.DateTime;
  
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
@@ -19,8 +18,25 @@ public class AlternatingItemsAdapter extends ArrayAdapter<Message> {
 	public class ViewHolder {
 		public TextView txtMessage;
 		public TextView txtCreatedDateTime;
-		public ImageView imgRetry;
+		public ImageView imgWaiting;
 		public View view;
+		
+		public void setState(MessageSendingState state) {
+	        switch (state) {
+	        case SENDING:
+	        	imgWaiting.setVisibility(View.GONE);
+	        	txtCreatedDateTime.setVisibility(View.VISIBLE);
+	        	break;
+	        case DELIVERED:
+	        	imgWaiting.setVisibility(View.GONE);
+	        	txtCreatedDateTime.setVisibility(View.VISIBLE);
+	        	break;
+	        case RETRYING:
+	        	imgWaiting.setVisibility(View.VISIBLE);
+	        	txtCreatedDateTime.setVisibility(View.GONE);
+	        	break;
+	        }
+		}
 	}
 	
 	private ViewHolder viewHolder;
@@ -39,7 +55,7 @@ public class AlternatingItemsAdapter extends ArrayAdapter<Message> {
     		viewHolder.view = convertView;
     		viewHolder.txtMessage = (TextView)convertView.findViewById(R.id.txtMessage);
     		viewHolder.txtCreatedDateTime = (TextView)convertView.findViewById(R.id.txtMessageCreatedTime);
-    		viewHolder.imgRetry = (ImageView)convertView.findViewById(R.id.imgRetry);
+    		viewHolder.imgWaiting = (ImageView)convertView.findViewById(R.id.imgWaiting);
     		
     		convertView.setTag(viewHolder);
     	} else {
@@ -48,50 +64,12 @@ public class AlternatingItemsAdapter extends ArrayAdapter<Message> {
     	
         final Message currentMessage = this.getItem(position);
         
-        String messageText;
-        if (position > 0 && this.getItem(position - 1).User.Name.compareTo(currentMessage.User.Name) == 0) {
-      	  	messageText = currentMessage.Text;
-        } else {
-        	messageText = currentMessage.toString();
-        }
-        
-        viewHolder.txtMessage.setText(messageText);
-        
-        viewHolder.txtCreatedDateTime.setText(currentMessage.Time);
-        viewHolder.imgRetry.setVisibility(View.GONE);
+        viewHolder.txtMessage.setText(currentMessage.toString());
+        viewHolder.txtCreatedDateTime.setText(new DateTime().GetUIDate(currentMessage.Time));
         viewHolder.view.setOnTouchListener(null);
-        
-        switch (currentMessage.SendingState) {
-        case NONE:
-        	break;
-        case SENDING:
-        	viewHolder.txtCreatedDateTime.setAlpha((float) 0.4);
-        	break;
-        case DELIVERED:
-        	viewHolder.txtCreatedDateTime.setAlpha((float) 0.9);
-        	break;
-        case SENDING_FAILED:
-        	viewHolder.imgRetry.setVisibility(View.VISIBLE);
-        	//viewHolder.txtCreatedDateTime.setVisibility(View.GONE);
-        	viewHolder.view.setOnTouchListener(new OnTouchListener() {
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					retryMessage(getContext(), currentMessage.getGUID());
-					return false;
-				}
-			});
-        	break;
-        }
-        
+        viewHolder.setState(currentMessage.SendingState);
         viewHolder.view.setBackgroundColor(currentMessage.User.FavoriteColor);
         
         return convertView;
-    }
-	
-	private static void retryMessage(Context context, String GUID) {
-        Intent intent = new Intent("com.example.notificationpoc.RETRY_MESSAGE");
-        intent.putExtra("GUID", GUID);
-        
-        context.sendBroadcast(intent);
     }
 }

@@ -22,13 +22,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int black_overlay=0x7f040000;
     }
     public static final class drawable {
-        public static final int ic_action_example=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int ic_launcher=0x7f020000;
+        public static final int ic_waiting=0x7f020001;
         public static final int main_background=0x7f020002;
     }
     public static final class id {
         public static final int btnSend=0x7f070003;
-        public static final int imgRetry=0x7f070006;
+        public static final int imgWaiting=0x7f070006;
         public static final int lstMessages=0x7f070001;
         public static final int message_layout=0x7f070004;
         public static final int progressBar=0x7f070000;

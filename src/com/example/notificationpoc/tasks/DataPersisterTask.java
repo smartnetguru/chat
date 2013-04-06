@@ -12,16 +12,20 @@ import com.example.notificationpoc.entities.MessageList;
 import com.google.gson.Gson;
 
 public class DataPersisterTask {
-	private final String MESSAGES_FILE_NAME = "messages";
+	private Context context;
 	
-	public boolean PersistMessages(MessageList messagesToPersist, Context ctx) {
+	public DataPersisterTask(Context ctx) {
+		context = ctx;
+	}
+	
+	public boolean PersistMessages(MessageList messagesToPersist, String name) {
 		if (messagesToPersist != null && !messagesToPersist.isEmpty()) {
 			String jsonString = new Gson().toJson(messagesToPersist);
 			try {
 				// first delete not to keep duplicates
-				ctx.deleteFile(MESSAGES_FILE_NAME);
+				context.deleteFile(name);
 				
-				FileOutputStream stream = ctx.openFileOutput(MESSAGES_FILE_NAME, Context.MODE_PRIVATE);
+				FileOutputStream stream = context.openFileOutput(name, Context.MODE_PRIVATE);
 				stream.write(jsonString.getBytes());
 				stream.close();
 				
@@ -34,13 +38,13 @@ public class DataPersisterTask {
 		return false;
 	}
 	
-	public MessageList RecoverMessages(Context ctx) {
-		if (new File(MESSAGES_FILE_NAME).exists()) {
+	public MessageList RecoverMessages(String name) {
+		if (new File(name).exists()) {
 			return new MessageList();
 		}
 		
 		try {			
-			FileInputStream stream = ctx.openFileInput(MESSAGES_FILE_NAME);
+			FileInputStream stream = context.openFileInput(name);
 			InputStreamReader streamReader = new InputStreamReader(stream);
 			BufferedReader bReader = new BufferedReader(streamReader);
 			
@@ -55,7 +59,6 @@ public class DataPersisterTask {
 		    
 		    return new Gson().fromJson(sb.toString(), MessageList.class);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
