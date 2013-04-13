@@ -66,9 +66,12 @@ public class AlternatingItemsAdapter extends ArrayAdapter<Message> {
         
         viewHolder.txtMessage.setText(currentMessage.toString());
         viewHolder.txtCreatedDateTime.setText(new DateTime().GetUIDate(currentMessage.Time));
-        viewHolder.view.setOnTouchListener(null);
         viewHolder.setState(currentMessage.SendingState);
-        viewHolder.view.setBackgroundColor(currentMessage.User.FavoriteColor);
+        if (currentMessage.user_id <= 2) {
+        	viewHolder.view.setBackgroundColor(0xCC445566);
+        } else {
+        	viewHolder.view.setBackgroundColor(0xCCBB55AA);
+        }
         
         return convertView;
     }

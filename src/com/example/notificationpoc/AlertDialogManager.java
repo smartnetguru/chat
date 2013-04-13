@@ -1,6 +1,7 @@
 package com.example.notificationpoc;
  
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
  
@@ -32,5 +33,10 @@ public class AlertDialogManager {
  
         // Showing Alert Message
         alertDialog.show();
+    }
+    
+    public void showPhoneNumberDialog(Context ctx) {
+    	DialogFragment pn = new PhoneNumberDialogManager();
+    	pn.getDialog().show();
     }
 }

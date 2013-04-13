@@ -7,7 +7,7 @@ public class Constants {
 	
 	public class DateFormat {
 		public final static String DB_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
-		public final static String UI_DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
+		public final static String UI_DATE_TIME_FORMAT = "dd.MM HH:mm";
 		
 		public final static String DATE_ONLY_FORMAT = "yyyy-MM-dd";
 		public final static String UI_TIME_ONLY_FORMAT = "HH:mm";
@@ -24,5 +24,6 @@ public class Constants {
 		public final static String START_LOADING = "com.example.notificationpoc.START_LOADING";
 		public final static String STOP_LOADING = "com.example.notificationpoc.STOP_LOADING";
 		public final static String DISPLAY_MESSAGE = "com.example.notificationpoc.DISPLAY_MESSAGE";
+		public final static String REGISTER_USER = "com.example.notificationpoc.REGISTER_USER";
 	}
 }

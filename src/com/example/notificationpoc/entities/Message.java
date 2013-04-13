@@ -6,8 +6,9 @@ import com.example.notificationpoc.util.Constants;
 import com.example.notificationpoc.util.Constants.MessageSendingState;
 
 public class Message {
+	public Integer Id;
+	public Integer user_id;
 	public String Text;
-	public User User;
 	public Date Time;
 	
 	public Constants.MessageSendingState SendingState = MessageSendingState.NONE;

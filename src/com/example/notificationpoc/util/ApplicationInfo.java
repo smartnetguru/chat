@@ -1,20 +1,26 @@
 package com.example.notificationpoc.util;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-public class ApplicationInfo extends Activity {
+public class ApplicationInfo {
+	private Context context;
+	
+	public ApplicationInfo(Context ctx) {
+		this.context = ctx;
+	}
+	
 	public Boolean isInForeground() {
-		ActivityManager am = (ActivityManager)getSystemService(android.content.Context.ACTIVITY_SERVICE);
+		ActivityManager am = (ActivityManager)context.getSystemService(android.content.Context.ACTIVITY_SERVICE);
 		// The first in the list of RunningTasks is always the foreground task.
 		RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
 		
 		String foregroundTaskPackageName = foregroundTaskInfo.topActivity.getPackageName();
-		PackageManager pm = getPackageManager();
+		PackageManager pm = context.getPackageManager();
 		PackageInfo foregroundAppPackageInfo;
 		try {
 			foregroundAppPackageInfo = pm.getPackageInfo(foregroundTaskPackageName, 0);
